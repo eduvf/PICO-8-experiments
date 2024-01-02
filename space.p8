@@ -1,8 +1,10 @@
 pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
-ang_vel = 0.01
-lin_vel = 1
+ang_vel = 0.02
+lin_acc = 0.2
+fric = 0.9
+
 anim = {
   {1, false, false},
   {2, true, false},
@@ -20,6 +22,7 @@ function _init()
     y = 64,
     ang = 0.25,
     vel = 0,
+    acc = 0,
     anim = 1,
     frame = 1,
     flipx = false,
@@ -28,20 +31,24 @@ function _init()
 end
 
 function _update()
-  p.vel = 0
+  p.acc = 0
+  p.vel *= fric
 
   if btn(0) then p.ang += ang_vel end
   if btn(1) then p.ang -= ang_vel end
-  if btn(4) then p.vel += lin_vel end
+  if btn(4) then p.acc = lin_acc end
 
   p.ang %= 1
 
+  p.vel += p.acc
   p.x += cos(p.ang) * p.vel
   p.y += sin(p.ang) * p.vel
 end
 
 function _draw()
   cls()
+
+  print(p.vel)
 
   p.anim = flr(p.ang * 8 + 6.25) % 8 + 1
   p.frame = anim[p.anim][1]
