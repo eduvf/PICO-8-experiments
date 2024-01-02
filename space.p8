@@ -5,13 +5,13 @@ ang_vel = 0.01
 lin_vel = 1
 anim = {
   {1, false, false},
-  {2, false, false},
-  {3, false, false},
-  {2, false, true},
-  {1, false, true},
-  {2, true, true},
+  {2, true, false},
   {3, true, false},
-  {2, true, false}
+  {2, true, true},
+  {1, false, true},
+  {2, false, true},
+  {3, false, false},
+  {2, false, false},
 }
 
 function _init()
@@ -20,7 +20,10 @@ function _init()
     y = 64,
     ang = 0.25,
     vel = 0,
-    anim = {1, false, false},
+    anim = 1,
+    frame = 1,
+    flipx = false,
+    flipy = false
   }
 end
 
@@ -39,7 +42,13 @@ end
 
 function _draw()
   cls()
-  spr(1, p.x, p.y, 1, 1, false, false)
+
+  p.anim = flr(p.ang * 8 + 6.25) % 8 + 1
+  p.frame = anim[p.anim][1]
+  p.flipx = anim[p.anim][2]
+  p.flipy = anim[p.anim][3]
+  
+  spr(p.frame, p.x, p.y, 1, 1, p.flipx, p.flipy)
 end
 
 __gfx__
