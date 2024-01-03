@@ -2,11 +2,46 @@ pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
 grid = {}
+next = {}
+
+neig = {
+  {-1, -1}, {0, -1}, {1, -1},
+  {-1,  0},          {1,  0},
+  {-1,  1}, {0,  1}, {1,  1}
+}
 
 function _init()
   for y = 0, 127 do
     for x = 0, 127 do
       grid[x+y*128] = rnd() > 0.5
+    end
+  end
+end
+
+function _update()
+  for y = 0, 127 do
+    for x = 0, 127 do
+      local alive = 0
+
+      for n = 1, #neig do
+        local _x = (x + neig[n][1])%128
+        local _y = (y + neig[n][2])%128
+        alive += pget(_x, _y)
+      end
+
+      if 2 == alive then
+        next[x+y*128] = grid[x+y*128]
+      elseif 3 == alive then
+        next[x+y*128] = true
+      else
+        next[x+y*128] = false
+      end
+    end
+  end
+
+  for y = 0, 127 do
+    for x = 0, 127 do
+      grid[x+y*128] = next[x+y*128]
     end
   end
 end
@@ -21,6 +56,7 @@ function _draw()
     end
   end
 end
+
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
