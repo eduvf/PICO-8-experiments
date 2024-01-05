@@ -16,6 +16,9 @@ anim = {
   {2, false, false},
 }
 
+fx = {}
+fx_col = {8, 9, 10, 7, 6, 5}
+
 function _init()
   p = {
     x = 64,
@@ -30,13 +33,44 @@ function _init()
   }
 end
 
+function add_fx()
+  add(fx, {
+    x = p.x + 2 + flr(rnd(4)),
+    y = p.y + 2 + flr(rnd(4)),
+    t = 0,
+    life = rnd(50) + 50
+  })
+end
+
+function update_fx()
+  for f in all(fx) do
+    f.x += rnd() > 0.95 and rnd({-1, 1}) or 0
+    f.y += rnd() > 0.95 and rnd({-1, 1}) or 0
+    f.t += 1
+    if f.t > f.life then
+      del(fx, f)
+    end
+  end
+end
+
+function draw_fx()
+  for f in all(fx) do
+    local c = fx_col[flr((f.t/f.life) * #fx_col) + 1]
+    pset(f.x, f.y, c)
+  end
+end
+
 function _update()
   p.acc = 0
   p.vel *= fric
+  update_fx()
 
   if btn(0) then p.ang += ang_vel end
   if btn(1) then p.ang -= ang_vel end
-  if btn(4) then p.acc = lin_acc end
+  if btn(4) then
+    p.acc = lin_acc
+    add_fx()
+  end
 
   p.ang %= 1
 
@@ -49,12 +83,14 @@ function _draw()
   cls()
 
   print(p.vel)
+  print(#fx)
 
   p.anim = flr(p.ang * 8 + 6.25) % 8 + 1
   p.frame = anim[p.anim][1]
   p.flipx = anim[p.anim][2]
   p.flipy = anim[p.anim][3]
   
+  draw_fx()
   spr(p.frame, p.x, p.y, 1, 1, p.flipx, p.flipy)
 end
 
