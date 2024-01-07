@@ -8,6 +8,31 @@ __lua__
 -- collision
 -- dialog
 -- interaction
+
+function _init()
+  t = 0
+  p = {
+    x = 0,
+    y = 0
+  }
+end
+
+function _update()
+  if btnp(0) then p.x -= 1 end
+  if btnp(1) then p.x += 1 end
+  if btnp(2) then p.y -= 1 end
+  if btnp(3) then p.y += 1 end
+
+  p.x = mid(p.x, 0, 15)
+  p.y = mid(p.y, 0, 15)
+
+  t += 1
+end
+
+function _draw()
+  cls()
+  spr(1 + flr(t/12)%2, p.x * 8, p.y * 8)
+end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000cc0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
