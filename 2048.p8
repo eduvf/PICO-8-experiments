@@ -10,7 +10,7 @@ function _init()
   }
 end
 
-function step()
+function put_rnd_num()
   for count = 1, 16 do
     local x = flr(rnd(4)) + 1
     local y = flr(rnd(4)) + 1
@@ -22,8 +22,15 @@ function step()
 end
 
 function _update()
-  if btnp(4) then
-    step()
+  local b = btnp()
+  local dir = -1
+  if (b & 0b0001) > 0 then dir = 0 end -- left
+  if (b & 0b0010) > 0 then dir = 1 end -- right
+  if (b & 0b0100) > 0 then dir = 2 end -- up
+  if (b & 0b1000) > 0 then dir = 3 end -- down
+
+  if dir >= 0 then
+    put_rnd_num()
   end
 end
 
