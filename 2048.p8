@@ -11,9 +11,14 @@ function _init()
 end
 
 function step()
-  local x = flr(rnd(4)) + 1
-  local y = flr(rnd(4)) + 1
-  game[y][x] = rnd({2, 4})
+  for count = 1, 16 do
+    local x = flr(rnd(4)) + 1
+    local y = flr(rnd(4)) + 1
+    if game[y][x] == 0 then
+      game[y][x] = rnd({2, 4})
+      break
+    end
+  end
 end
 
 function _update()
