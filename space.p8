@@ -111,7 +111,7 @@ function _draw()
   print(p.vel)
   print(#fx)
 
-  p.anim = flr(p.ang * 8 + 6.25) % 8 + 1
+  p.anim = flr(p.ang * 8 + 6.5) % 8 + 1
   p.frame = anim[p.anim][1]
   p.flipx = anim[p.anim][2]
   p.flipy = anim[p.anim][3]
