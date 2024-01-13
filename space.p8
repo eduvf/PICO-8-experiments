@@ -73,6 +73,11 @@ function update_missiles()
   for m in all(missiles) do
     m.x += cos(m.ang) * 3
     m.y += sin(m.ang) * 3
+
+    if 0 > m.x or m.x > 128
+    or 0 > m.y or m.y > 128 then
+      del(missiles, m)
+    end
   end
 end
 
