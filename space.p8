@@ -63,8 +63,8 @@ end
 
 function add_missile()
   add(missiles, {
-    x = p.x + 4,
-    y = p.y + 4,
+    x = p.x + 4 + cos(p.ang) * 2,
+    y = p.y + 4 + sin(p.ang) * 2,
     ang = p.ang
   })
 end
@@ -115,6 +115,7 @@ function _draw()
 
   print(p.vel)
   print(#fx)
+  print(#missiles)
 
   p.anim = flr(p.ang * 8 + 6.5) % 8 + 1
   p.frame = anim[p.anim][1]
