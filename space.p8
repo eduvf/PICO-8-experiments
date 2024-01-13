@@ -63,22 +63,22 @@ end
 
 function add_missile()
   add(missiles, {
-    x = p.x,
-    y = p.y,
+    x = p.x + 4,
+    y = p.y + 4,
     ang = p.ang
   })
 end
 
 function update_missiles()
   for m in all(missiles) do
-    m.x += cos(m.ang)
-    m.y += sin(m.ang)
+    m.x += cos(m.ang) * 3
+    m.y += sin(m.ang) * 3
   end
 end
 
 function draw_missiles()
   for m in all(missiles) do
-    pset(m.x, m.y, 15)
+    pset(m.x, m.y, 12)
   end
 end
 
