@@ -31,6 +31,7 @@ function _init()
     flipx = false,
     flipy = false
   }
+  missiles = {}
 end
 
 function add_fx()
@@ -60,16 +61,41 @@ function draw_fx()
   end
 end
 
+function add_missile()
+  add(missiles, {
+    x = p.x,
+    y = p.y,
+    ang = p.ang
+  })
+end
+
+function update_missiles()
+  for m in all(missiles) do
+    m.x += cos(m.ang)
+    m.y += sin(m.ang)
+  end
+end
+
+function draw_missiles()
+  for m in all(missiles) do
+    pset(m.x, m.y, 15)
+  end
+end
+
 function _update()
   p.acc = 0
   p.vel *= fric
   update_fx()
+  update_missiles()
 
   if btn(0) then p.ang += ang_vel end
   if btn(1) then p.ang -= ang_vel end
   if btn(4) then
     p.acc = lin_acc
     add_fx()
+  end
+  if btnp(5) then
+    add_missile()
   end
 
   p.ang %= 1
@@ -91,6 +117,7 @@ function _draw()
   p.flipy = anim[p.anim][3]
   
   draw_fx()
+  draw_missiles()
   spr(p.frame, p.x, p.y, 1, 1, p.flipx, p.flipy)
 end
 
