@@ -109,6 +109,8 @@ function _update()
   p.vel += p.acc
   p.x += cos(p.ang) * p.vel
   p.y += sin(p.ang) * p.vel
+  p.x = (p.x + 8) % 136 - 8
+  p.y = (p.y + 8) % 136 - 8
 end
 
 function _draw()
