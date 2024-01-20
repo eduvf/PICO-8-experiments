@@ -12,7 +12,7 @@ neig = {
 
 function _init()
   for p = 0, 16384-1 do
-    prev[p] = rnd() > 0.5
+    prev[p] = rnd() > 0.9
   end
 end
 
@@ -27,12 +27,10 @@ function _update()
       end
     end
 
-    if 2 == alive then
-      next[p] = prev[p]
-    elseif 3 == alive then
-      next[p] = true
+    if prev[p] then
+      next[p] = (alive == 2) or (alive == 3)
     else
-      next[p] = false
+      next[p] = alive == 3
     end
   end
 
