@@ -11,17 +11,17 @@ neig = {
 }
 
 function _init()
-  for p = 0, 128*128-1 do
+  for p = 0, 16384-1 do
     prev[p] = rnd() > 0.5
   end
 end
 
 function _update()
-  for p = 0, 128*128-1 do
+  for p = 0, 16384-1 do
     local alive = 0
 
     for n = 1, #neig do
-      local i = (p + neig[n]) % (128*128)
+      local i = (p + neig[n]) % 16384
       if prev[i] then
         alive += 1
       end
@@ -36,7 +36,7 @@ function _update()
     end
   end
 
-  for p = 0, 128*128-1 do
+  for p = 0, 16384-1 do
     prev[p] = next[p]
   end
 end
@@ -44,7 +44,7 @@ end
 function _draw()
   cls()
 
-  for p = 0, 128*128-1 do
+  for p = 0, 16384-1 do
     if prev[p] then
       pset(p%128, flr(p/128), 1)
     end
