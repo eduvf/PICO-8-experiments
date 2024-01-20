@@ -5,9 +5,9 @@ prev = {}
 next = {}
 
 neig = {
-  {-1, -1}, {0, -1}, {1, -1},
-  {-1,  0},          {1,  0},
-  {-1,  1}, {0,  1}, {1,  1}
+  -128-1, -128, -128+1,
+  -1, 1,
+  128-1, 128, 128+1
 }
 
 function _init()
@@ -21,9 +21,8 @@ function _update()
     local alive = 0
 
     for n = 1, #neig do
-      local x = (p%128 + neig[n][1])%128
-      local y = (flr(p/128) + neig[n][2])%128
-      if prev[x+y*128] then
+      local i = (p + neig[n]) % (128*128)
+      if prev[i] then
         alive += 1
       end
     end
