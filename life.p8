@@ -10,7 +10,7 @@ function _init()
   end
 end
 
-function _update()
+function _draw()
   for p = 0, 16384-1 do
     local alive = 0
 
@@ -25,23 +25,15 @@ function _update()
 
     if prev[p] then
       next[p] = (alive == 2) or (alive == 3)
+      pset(p % 128, flr(p / 128), 1)
     else
       next[p] = alive == 3
+      pset(p % 128, flr(p / 128), 0)
     end
   end
 
   for p = 0, 16384-1 do
     prev[p] = next[p]
-  end
-end
-
-function _draw()
-  cls()
-
-  for p = 0, 16384-1 do
-    if prev[p] then
-      pset(p%128, flr(p/128), 1)
-    end
   end
 end
 
