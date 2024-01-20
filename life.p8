@@ -3,6 +3,7 @@ version 36
 __lua__
 prev = {}
 next = {}
+total = 0
 
 function _init()
   for p = 0, 16384-1 do
@@ -11,6 +12,7 @@ function _init()
 end
 
 function _draw()
+  total = 0
   for p = 0, 16384-1 do
     local alive = 0
 
@@ -25,12 +27,15 @@ function _draw()
 
     if prev[p] then
       next[p] = (alive == 2) or (alive == 3)
-      pset(p % 128, flr(p / 128), 1)
+      pset(p % 128, flr(p / 128), 11)
+      total += 1
     else
       next[p] = alive == 3
       pset(p % 128, flr(p / 128), 0)
     end
   end
+  rectfill(0, 0, 128, 6, 0)
+  print("alive cells: "..total, 0, 0, 10)
 
   for p = 0, 16384-1 do
     prev[p] = next[p]
