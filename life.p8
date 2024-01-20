@@ -4,12 +4,6 @@ __lua__
 prev = {}
 next = {}
 
-neig = {
-  -128-1, -128, -128+1,
-  -1, 1,
-  128-1, 128, 128+1
-}
-
 function _init()
   for p = 0, 16384-1 do
     prev[p] = rnd() > 0.9
@@ -20,12 +14,14 @@ function _update()
   for p = 0, 16384-1 do
     local alive = 0
 
-    for n = 1, #neig do
-      local i = (p + neig[n]) % 16384
-      if prev[i] then
-        alive += 1
-      end
-    end
+    if prev[(p-128-1)%16384] then alive += 1 end
+    if prev[(p-128)  %16384] then alive += 1 end
+    if prev[(p-128+1)%16384] then alive += 1 end
+    if prev[(p-1)    %16384] then alive += 1 end
+    if prev[(p+1)    %16384] then alive += 1 end
+    if prev[(p+128-1)%16384] then alive += 1 end
+    if prev[(p+128)  %16384] then alive += 1 end
+    if prev[(p+128+1)%16384] then alive += 1 end
 
     if prev[p] then
       next[p] = (alive == 2) or (alive == 3)
