@@ -23,22 +23,7 @@ end
 
 
 function slide(dir)
-  local x_from, x_to = 1, 4
-  local y_from, y_to = 1, 4
-
-  if dir == 0 then
-    x_from, x_to = 4, 1
-  end
-  if dir == 2 then
-    y_from, y_to = 4, 1
-  end
-
-  local new = {{}, {}, {}, {}}
-  for y_from, y_to do
-    for x_from, x_to do
-      -- todo
-    end
-  end
+  -- todo
 end
 
 function _update()
