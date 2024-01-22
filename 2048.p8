@@ -2,6 +2,8 @@ pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
 function _init()
+  colors = { [0]=5, 10, 12, 11, 9, 8, 14, 15, 7, 6, 13, 2 }
+
   game = {
     { 0, 0, 0, 0 },
     { 0, 0, 0, 0 },
@@ -43,7 +45,8 @@ function _draw()
   cls()
   for y = 1, 4 do
     for x = 1, 4 do
-      print(game[y][x], 32*(x-1), 32*(y-1), 7)
+      local n = game[y][x]
+      print(n, 32*(x-1), 32*(y-1), colors[n/2])
     end
   end
 end
