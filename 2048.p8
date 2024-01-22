@@ -25,7 +25,33 @@ end
 
 
 function slide(dir)
-  -- todo
+  if dir == 0 then
+    for y = 1, 4 do
+      local ns = {}
+      
+      for x = 1, 4 do
+        if game[y][x] > 0 then
+          if #ns == 0 then
+            ns[1] = game[y][x]
+          else
+            if ns[#ns] == game[y][x] then
+              ns[#ns] *= 2
+            else
+              ns[#ns + 1] = game[y][x]
+            end
+          end
+        end
+      end
+
+      for x = 1, 4 do
+        if x <= #ns then
+          game[y][x] = ns[x]
+        else
+          game[y][x] = 0
+        end
+      end
+    end
+  end
 end
 
 function _update()
@@ -37,6 +63,7 @@ function _update()
   if (b & 0b1000) > 0 then dir = 3 end -- down
 
   if dir >= 0 then
+    slide(dir)
     put_rnd_num()
   end
 end
