@@ -23,6 +23,19 @@ function put_rnd_num()
   end
 end
 
+function arrange(x, y, ns)
+  if game[y][x] > 0 then
+    if #ns == 0 then
+      ns[1] = game[y][x]
+    else
+      if ns[#ns] == game[y][x] then
+        ns[#ns] *= 2
+      else
+        ns[#ns + 1] = game[y][x]
+      end
+    end
+  end
+end
 
 function slide(dir)
   if dir == 0 then
@@ -30,17 +43,7 @@ function slide(dir)
       local ns = {}
       
       for x = 1, 4 do
-        if game[y][x] > 0 then
-          if #ns == 0 then
-            ns[1] = game[y][x]
-          else
-            if ns[#ns] == game[y][x] then
-              ns[#ns] *= 2
-            else
-              ns[#ns + 1] = game[y][x]
-            end
-          end
-        end
+        arrange(x, y, ns)
       end
 
       for x = 1, 4 do
