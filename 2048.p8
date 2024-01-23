@@ -86,6 +86,22 @@ function slide(dir)
         end
       end
     end
+  elseif dir == 3 then
+    for x = 1, 4 do
+      local ns = {}
+
+      for y = 4, 1, -1 do
+        arrange(x, y, ns)
+      end
+
+      for y = 4, 1, -1 do
+        if #ns > 0 then
+          game[y][x] = deli(ns, 1)
+        else
+          game[y][x] = 0
+        end
+      end
+    end
   end
 end
 
