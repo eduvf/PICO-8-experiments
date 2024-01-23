@@ -17,7 +17,7 @@ function put_rnd_num()
     local x = flr(rnd(4)) + 1
     local y = flr(rnd(4)) + 1
     if game[y][x] == 0 then
-      game[y][x] = rnd({2, 4})
+      game[y][x] = rnd({1, 2})
       break
     end
   end
@@ -29,7 +29,7 @@ function arrange(x, y, ns)
       ns[1] = game[y][x]
     else
       if ns[#ns] == game[y][x] then
-        ns[#ns] *= 2
+        ns[#ns] += 1
       else
         ns[#ns + 1] = game[y][x]
       end
@@ -108,7 +108,8 @@ function _draw()
   for y = 1, 4 do
     for x = 1, 4 do
       local n = game[y][x]
-      print(n, 32*(x-1), 32*(y-1), colors[n/2])
+      local pr_n = n > 0 and 2^n or 0
+      print(pr_n, 32*(x-1), 32*(y-1), colors[n])
     end
   end
 end
