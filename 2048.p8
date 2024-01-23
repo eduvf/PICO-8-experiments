@@ -70,6 +70,22 @@ function slide(dir)
         end
       end
     end
+  elseif dir == 2 then
+    for x = 1, 4 do
+      local ns = {}
+
+      for y = 1, 4 do
+        arrange(x, y, ns)
+      end
+
+      for y = 1, 4 do
+        if y <= #ns then
+          game[y][x] = ns[y]
+        else
+          game[y][x] = 0
+        end
+      end
+    end
   end
 end
 
