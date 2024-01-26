@@ -47,8 +47,8 @@ function slide(dir)
       end
 
       for x = 1, 4 do
-        if x <= #ns then
-          game[y][x] = ns[x]
+        if #ns > 0 then
+          game[y][x] = deli(ns, 1)
         else
           game[y][x] = 0
         end
@@ -79,8 +79,8 @@ function slide(dir)
       end
 
       for y = 1, 4 do
-        if y <= #ns then
-          game[y][x] = ns[y]
+        if #ns > 0 then
+          game[y][x] = deli(ns, 1)
         else
           game[y][x] = 0
         end
