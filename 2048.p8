@@ -37,71 +37,43 @@ function arrange(x, y, ns)
   end
 end
 
+function horizontal_movement(from, to, step)
+  for y = 1, 4 do
+    local ns = {}
+
+    for x = from, to, step do
+      arrange(x, y, ns)
+    end
+
+    for x = from, to, step do
+      game[y][x] = deli(ns, 1) or 0
+    end
+  end
+end
+
+function vertical_movement(from, to, step)
+  for x = 1, 4 do
+    local ns = {}
+
+    for y = from, to, step do
+      arrange(x, y, ns)
+    end
+
+    for y = from, to, step do
+      game[y][x] = deli(ns, 1) or 0
+    end
+  end
+end
+
 function slide(dir)
   if dir == 0 then
-    for y = 1, 4 do
-      local ns = {}
-      
-      for x = 1, 4 do
-        arrange(x, y, ns)
-      end
-
-      for x = 1, 4 do
-        if #ns > 0 then
-          game[y][x] = deli(ns, 1)
-        else
-          game[y][x] = 0
-        end
-      end
-    end
+    horizontal_movement(1, 4, 1)
   elseif dir == 1 then
-    for y = 1, 4 do
-      local ns = {}
-      
-      for x = 4, 1, -1 do
-        arrange(x, y, ns)
-      end
-
-      for x = 4, 1, -1 do
-        if #ns > 0 then
-          game[y][x] = deli(ns, 1)
-        else
-          game[y][x] = 0
-        end
-      end
-    end
+    horizontal_movement(4, 1, -1)
   elseif dir == 2 then
-    for x = 1, 4 do
-      local ns = {}
-
-      for y = 1, 4 do
-        arrange(x, y, ns)
-      end
-
-      for y = 1, 4 do
-        if #ns > 0 then
-          game[y][x] = deli(ns, 1)
-        else
-          game[y][x] = 0
-        end
-      end
-    end
+    vertical_movement(1, 4, 1)
   elseif dir == 3 then
-    for x = 1, 4 do
-      local ns = {}
-
-      for y = 4, 1, -1 do
-        arrange(x, y, ns)
-      end
-
-      for y = 4, 1, -1 do
-        if #ns > 0 then
-          game[y][x] = deli(ns, 1)
-        else
-          game[y][x] = 0
-        end
-      end
-    end
+    vertical_movement(4, 1, -1)
   end
 end
 
