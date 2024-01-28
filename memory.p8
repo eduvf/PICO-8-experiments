@@ -30,10 +30,16 @@ end
 function print_board()
   local offset = 8
   local spacing = 12
+  local cursor_index = cursor.x + (cursor.y-1)*4
+
   for i = 1, 16 do
     local x = (i-1) % 4 * spacing + offset
     local y = flr((i-1) / 4) * spacing + offset
-    print(board[i], x, y)
+    local bg = ""
+    if i == cursor_index then
+      bg = "\#2"
+    end
+    print(bg..board[i], x, y)
   end
 end
 
@@ -49,7 +55,7 @@ end
 function _draw()
   cls()
   print_board()
-  print(cursor.x..cursor.y)
+  -- print(cursor.x..cursor.y)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
