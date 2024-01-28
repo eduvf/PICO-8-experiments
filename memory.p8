@@ -9,6 +9,7 @@ function _init()
     "\f9🐱", "\fc♪", "\fa★", "\fb●",
     "\ff⌂", "\fe⧗", "\f6◆", "\f8♥"
   }
+  cursor = { x = 1, y = 1 }
 
   generate_board()
 end
@@ -38,11 +39,17 @@ end
 
 function _update()
   t += 1
+
+  if btnp(0) then cursor.x = mid(1, (cursor.x-1), 4) end
+  if btnp(1) then cursor.x = mid(1, (cursor.x+1), 4) end
+  if btnp(2) then cursor.y = mid(1, (cursor.y-1), 4) end
+  if btnp(3) then cursor.y = mid(1, (cursor.y+1), 4) end
 end
 
 function _draw()
   cls()
   print_board()
+  print(cursor.x..cursor.y)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
