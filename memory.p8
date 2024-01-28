@@ -10,6 +10,7 @@ function _init()
     "\ff⌂", "\fe⧗", "\f6◆", "\f8♥"
   }
   cursor = { x = 1, y = 1 }
+  hide = {}
 
   generate_board()
 end
@@ -24,6 +25,7 @@ function generate_board()
         break
       end
     end
+    hide[i] = true
   end
 end
 
@@ -37,9 +39,14 @@ function print_board()
     local y = flr((i-1) / 4) * spacing + offset
     local bg = ""
     if i == cursor_index then
-      bg = "\#2"
+      bg = "\#1"
     end
-    print(bg..board[i], x, y)
+
+    if hide[i] then
+      print(bg.."\f2ˇ", x, y)
+    else
+      print(bg..board[i], x, y)
+    end
   end
 end
 
@@ -50,6 +57,11 @@ function _update()
   if btnp(1) then cursor.x = mid(1, (cursor.x+1), 4) end
   if btnp(2) then cursor.y = mid(1, (cursor.y-1), 4) end
   if btnp(3) then cursor.y = mid(1, (cursor.y+1), 4) end
+
+  if btnp(4) then
+    local i = cursor.x + (cursor.y-1)*4
+    hide[i] = not hide[i]
+  end
 end
 
 function _draw()
