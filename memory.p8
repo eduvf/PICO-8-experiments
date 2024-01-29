@@ -11,6 +11,11 @@ function _init()
   }
   cursor = { x = 1, y = 1 }
   hide = {}
+  seen = {
+    first = 0,
+    second = 0
+  }
+  match = false
 
   generate_board()
 end
@@ -50,6 +55,10 @@ function print_board()
   end
 end
 
+function check_match()
+  return board[seen.first] == board[seen.second]
+end
+
 function _update()
   t += 1
 
@@ -61,6 +70,19 @@ function _update()
   if btnp(4) then
     local i = cursor.x + (cursor.y-1)*4
     hide[i] = not hide[i]
+    if seen.first == 0 then
+      seen.first = i
+    elseif seen.second == 0 then
+      seen.second = i
+      match = check_match()
+      if match then
+        match = false
+      else
+        hide[seen.first] = true
+        hide[seen.second] = true
+      end
+      seen.first, seen.second = 0, 0
+    end
   end
 end
 
@@ -68,6 +90,9 @@ function _draw()
   cls()
   print_board()
   -- print(cursor.x..cursor.y)
+  print(seen.first.." "..seen.second)
+  print((board[seen.first]or"").." "..(board[seen.second]or""))
+  print(match)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
