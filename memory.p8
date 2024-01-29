@@ -5,6 +5,7 @@ function _init()
   t = 0
   start = 100
   timer = 0
+  timer_colors = {4, 3, 1, 2}
   update = init_game_update
   
   board = {}
@@ -109,7 +110,8 @@ end
 
 function _draw()
   cls()
-  rectfill(0, 0, timer * 128, 0, 2)
+  local timer_col = ceil(timer * #timer_colors)
+  rectfill(0, 0, timer * 128, 0, timer_colors[timer_col])
 
   print_board()
   -- print(cursor.x..cursor.y)
