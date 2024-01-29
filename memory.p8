@@ -3,6 +3,9 @@ version 36
 __lua__
 function _init()
   t = 0
+  start = 100
+  timer = 0
+  update = init_game_update
   
   board = {}
   cards = {
@@ -30,7 +33,13 @@ function generate_board()
         break
       end
     end
-    hide[i] = true
+    hide[i] = false
+  end
+end
+
+function switch_hide_all()
+  for i = 1, 16 do
+    hide[i] = not hide[i]
   end
 end
 
@@ -59,9 +68,15 @@ function check_match()
   return board[seen.first] == board[seen.second]
 end
 
-function _update()
-  t += 1
+function init_game_update()
+  timer = t / start
+  if t >= start then
+    update = main_game_update
+    switch_hide_all()
+  end
+end
 
+function main_game_update()
   if btnp(0) then cursor.x = mid(1, (cursor.x-1), 4) end
   if btnp(1) then cursor.x = mid(1, (cursor.x+1), 4) end
   if btnp(2) then cursor.y = mid(1, (cursor.y-1), 4) end
@@ -86,8 +101,16 @@ function _update()
   end
 end
 
+function _update()
+  t += 1
+
+  update()
+end
+
 function _draw()
   cls()
+  rectfill(0, 0, timer * 128, 0, 2)
+
   print_board()
   -- print(cursor.x..cursor.y)
   print(seen.first.." "..seen.second)
