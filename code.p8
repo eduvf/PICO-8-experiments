@@ -2,8 +2,23 @@ pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
 function _init()
-  color(12)
-  print("hi!")
+  code = {}
+  fn_list = { "forward", "turn", "up", "down" }
+  fn = 1
+end
+
+function _update()
+  if btnp(0) then
+    fn = mid(1, fn - 1, #fn_list)
+  elseif btnp(1) then
+    fn = mid(1, fn + 1, #fn_list)
+  end
+end
+
+function _draw()
+  cls()
+  local hud = "\fd⬅️ \fc"..fn_list[fn].." \fd➡️"
+  print(hud, 64 - (#hud/2)*3, 0)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
