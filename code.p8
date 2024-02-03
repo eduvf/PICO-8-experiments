@@ -53,13 +53,19 @@ function run_code()
   for ins in all(code) do
     if ins.op == 'color' then
       color(ins.arg)
+    elseif ins.op == 'up' then
+      turtle.on = false
+    elseif ins.op == 'down' then
+      turtle.on = true
     elseif ins.op == 'turn' then
       turtle.ang += ins.arg
     elseif ins.op == 'forward' then
       local x, y = turtle.x, turtle.y
       turtle.x -= sin(turtle.ang/360) * ins.arg
       turtle.y -= cos(turtle.ang/360) * ins.arg
-      line(x, y, turtle.x, turtle.y)
+      if turtle.on then
+        line(x, y, turtle.x, turtle.y)
+      end
     end
   end
 end
