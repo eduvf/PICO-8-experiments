@@ -4,14 +4,10 @@ __lua__
 function _init()
   code = {
     {op = 'color',   arg = 8},
+    {op = 'repeat',  arg = 4},
     {op = 'turn',    arg = 90},
     {op = 'forward', arg = 40},
-    {op = 'turn',    arg = 90},
-    {op = 'forward', arg = 30},
-    {op = 'turn',    arg = 90},
-    {op = 'forward', arg = 20},
-    {op = 'turn',    arg = 90},
-    {op = 'forward', arg = 10},
+    {op = 'end'}
   }
   turtle = {
     x = 64,
@@ -21,6 +17,7 @@ function _init()
     color = 7,
   }
   state = 'run'
+  ip = 1
 
   cls()
   run_code()
@@ -50,23 +47,36 @@ function _draw()
 end
 
 function run_code()
-  for ins in all(code) do
-    if ins.op == 'color' then
-      color(ins.arg)
-    elseif ins.op == 'up' then
+  while ip <= #code do
+    local op = code[ip].op
+    local arg = code[ip].arg
+
+    if op == 'color' then
+      color(arg)
+    elseif op == 'up' then
       turtle.on = false
-    elseif ins.op == 'down' then
+    elseif op == 'down' then
       turtle.on = true
-    elseif ins.op == 'turn' then
-      turtle.ang += ins.arg
-    elseif ins.op == 'forward' then
+    elseif op == 'turn' then
+      turtle.ang += arg
+    elseif op == 'forward' then
       local x, y = turtle.x, turtle.y
-      turtle.x -= sin(turtle.ang/360) * ins.arg
-      turtle.y -= cos(turtle.ang/360) * ins.arg
+      turtle.x -= sin(turtle.ang/360) * arg
+      turtle.y -= cos(turtle.ang/360) * arg
       if turtle.on then
         line(x, y, turtle.x, turtle.y)
       end
+    elseif op == 'repeat' then
+      local curr_ip = ip + 1
+      for _ = 1, arg do
+        ip = curr_ip
+        run_code()
+      end
+    elseif op == 'end' then
+      return
     end
+
+    ip += 1
   end
 end
 
