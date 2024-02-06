@@ -3,10 +3,13 @@ version 36
 __lua__
 function _init()
   code = {
+    {op = 'set x',   arg = 8},
     {op = 'color',   arg = 8},
-    {op = 'repeat',  arg = 4},
-    {op = 'turn',    arg = 90},
-    {op = 'forward', arg = 40},
+    {op = 'repeat',  arg = 8},
+    {op = 'turn',    arg = 45},
+    {op = 'forward', arg = 20},
+    {op = 'add to x',arg = 1},
+    {op = 'print',   arg = 'x'},
     {op = 'end'}
   }
   turtle = {
@@ -18,6 +21,10 @@ function _init()
   }
   state = 'run'
   ip = 1
+
+  var_x = 0
+  var_y = 0
+  var_z = 0
 
   cls()
   run_code()
@@ -51,8 +58,14 @@ function run_code()
     local op = code[ip].op
     local arg = code[ip].arg
 
+    if arg == 'x' then arg = var_x end
+    if arg == 'y' then arg = var_y end
+    if arg == 'z' then arg = var_z end
+
     if op == 'color' then
       color(arg)
+    elseif op == 'print' then
+      print(arg)
     elseif op == 'up' then
       turtle.on = false
     elseif op == 'down' then
@@ -74,6 +87,18 @@ function run_code()
       end
     elseif op == 'end' then
       return
+    elseif op == 'set x' then
+      var_x = arg
+    elseif op == 'set y' then
+      var_y = arg
+    elseif op == 'set z' then
+      var_z = arg
+    elseif op == 'add to x' then
+      var_x += arg
+    elseif op == 'add to y' then
+      var_y += arg
+    elseif op == 'add to z' then
+      var_z += arg
     end
 
     ip += 1
