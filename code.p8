@@ -3,13 +3,15 @@ version 36
 __lua__
 function _init()
   code = {
-    {op = 'set x',   arg = 8},
-    {op = 'repeat',  arg = 8},
-    {op = 'color',   arg = 'x'},
-    {op = 'turn',    arg = 45},
-    {op = 'forward', arg = 20},
-    {op = 'add to x',arg = 1},
-    {op = 'print',   arg = 'x'},
+    {op = 'set x',    arg = 8   },
+    {op = 'set y',    arg = 0   },
+    {op = 'repeat',   arg = 8  },
+    {op = 'color',    arg = 'x' },
+    {op = 'turn',     arg = 'y' },
+    {op = 'forward',  arg = 5   },
+    {op = 'add to x', arg = 1   },
+    {op = 'add to y', arg = 10  },
+    {op = 'print',    arg = 'x' },
     {op = 'end'}
   }
   turtle = {
