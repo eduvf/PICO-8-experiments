@@ -4,8 +4,8 @@ __lua__
 function _init()
   code = {
     {op = 'set x',   arg = 8},
-    {op = 'color',   arg = 8},
     {op = 'repeat',  arg = 8},
+    {op = 'color',   arg = 'x'},
     {op = 'turn',    arg = 45},
     {op = 'forward', arg = 20},
     {op = 'add to x',arg = 1},
