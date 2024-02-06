@@ -5,12 +5,14 @@ function _init()
   code = {
     {op = 'set x',    arg = 8   },
     {op = 'set y',    arg = 0   },
-    {op = 'repeat',   arg = 8  },
+    {op = 'set z',    arg = 5   },
+    {op = 'repeat',   arg = 8   },
     {op = 'color',    arg = 'x' },
     {op = 'turn',     arg = 'y' },
-    {op = 'forward',  arg = 5   },
+    {op = 'forward',  arg = 'z' },
     {op = 'add to x', arg = 1   },
     {op = 'add to y', arg = 10  },
+    {op = 'add to z', arg = 3   },
     {op = 'print',    arg = 'x' },
     {op = 'end'}
   }
