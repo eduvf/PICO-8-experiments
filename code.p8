@@ -35,26 +35,9 @@ function _init()
 end
 
 function _update()
-  -- if btnp(0) then
-  --   fn = mid(1, fn - 1, #fn_list)
-  -- elseif btnp(1) then
-  --   fn = mid(1, fn + 1, #fn_list)
-  -- end
-
-  -- if btnp(4) then
-  --   add(code, fn_list[fn])
-  -- end
 end
 
 function _draw()
-  -- cls()
-  -- local hud = "\fd⬅️ \fc"..fn_list[fn].." \fd➡️"
-  -- print(hud, 64 - (#hud/2)*3, 0)
-
-  -- cursor(0, 12, 2)
-  -- for i = 1, #code do
-  --   print(code[i])
-  -- end
 end
 
 function run_code()
