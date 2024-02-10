@@ -16,6 +16,26 @@ function _init()
     {op = 'print',    arg = 'x' },
     {op = 'end'}
   }
+  editor = true
+  reset()
+end
+
+function _update()
+  if btnp(5) then
+    editor = not editor
+    reset()
+    run_code()
+  end
+end
+
+function _draw()
+  if editor then
+    cls()
+    print('editor')
+  end
+end
+
+function reset()
   turtle = {
     x = 64,
     y = 64,
@@ -23,21 +43,11 @@ function _init()
     ang = 0,
     color = 7,
   }
-  state = 'run'
   ip = 1
-
   var_x = 0
   var_y = 0
   var_z = 0
-
   cls()
-  run_code()
-end
-
-function _update()
-end
-
-function _draw()
 end
 
 function run_code()
