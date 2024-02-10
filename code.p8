@@ -18,7 +18,11 @@ function _init()
   }
   editor = true
   cursor = {
-    line = 1
+    line = 1,
+    action = 'delete'
+  }
+  actions = {
+    delete = editor_delete
   }
   reset()
 end
@@ -36,6 +40,9 @@ function _update()
     end
     if btnp(3) then
       cursor.line = mid(1, cursor.line + 1, #code)
+    end
+    if btnp(4) then
+      actions[cursor.action]()
     end
   end
 end
@@ -59,6 +66,10 @@ function _draw()
     color(1)
     print('line: '..cursor.line)
   end
+end
+
+function editor_delete()
+  deli(code, cursor.line)
 end
 
 function reset()
