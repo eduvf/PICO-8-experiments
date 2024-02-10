@@ -51,8 +51,9 @@ function _draw()
   if editor then
     cls()
     color(1)
-    print('editor')
-    for i = 1, 18 do
+    print('action: \f2⬅️ \f8'..cursor.action..' \f2➡️')
+    print('\f2…………………………………………')
+    for i = 1, 16 do
       if code[i] then
         if cursor.line == i then
           print('\f1>\f9'..code[i].op..' \fa'..code[i].arg)
@@ -63,8 +64,8 @@ function _draw()
         print('')
       end
     end
-    color(1)
-    print('line: '..cursor.line)
+    print('\f2…………………………………………')
+    print('\f1line: '..cursor.line)
   end
 end
 
