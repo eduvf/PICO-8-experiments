@@ -14,9 +14,12 @@ function _init()
     {op = 'add to y', arg = 10  },
     {op = 'add to z', arg = 3   },
     {op = 'print',    arg = 'x' },
-    {op = 'end'}
+    {op = 'end',      arg = ''}
   }
   editor = true
+  cursor = {
+    line = 1
+  }
   reset()
 end
 
@@ -31,7 +34,21 @@ end
 function _draw()
   if editor then
     cls()
+    color(1)
     print('editor')
+    for i = 1, 18 do
+      if code[i] then
+        if cursor.line == i then
+          print('\f9'..code[i].op..' \fa'..code[i].arg)
+        else
+          print('\fe'..code[i].op..' \ff'..code[i].arg)
+        end
+      else
+        print('')
+      end
+    end
+    color(1)
+    print('line: '..cursor.line)
   end
 end
 
