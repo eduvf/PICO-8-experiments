@@ -29,6 +29,15 @@ function _update()
     reset()
     run_code()
   end
+
+  if editor then
+    if btnp(2) then
+      cursor.line = mid(1, cursor.line - 1, #code)
+    end
+    if btnp(3) then
+      cursor.line = mid(1, cursor.line + 1, #code)
+    end
+  end
 end
 
 function _draw()
@@ -39,9 +48,9 @@ function _draw()
     for i = 1, 18 do
       if code[i] then
         if cursor.line == i then
-          print('\f9'..code[i].op..' \fa'..code[i].arg)
+          print('\f1>\f9'..code[i].op..' \fa'..code[i].arg)
         else
-          print('\fe'..code[i].op..' \ff'..code[i].arg)
+          print(' \fe'..code[i].op..' \ff'..code[i].arg)
         end
       else
         print('')
