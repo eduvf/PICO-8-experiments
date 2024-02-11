@@ -19,10 +19,15 @@ function _init()
   editor = true
   cursor = {
     line = 1,
-    action = 'delete'
+    action = 1,
+    lock = false
+  }
+  actions_key = {
+    'delete', 'move'
   }
   actions = {
-    delete = editor_delete
+    delete = editor_delete,
+    move = editor_move
   }
   reset()
 end
@@ -35,6 +40,12 @@ function _update()
   end
 
   if editor then
+    if btnp(0) and not cursor.lock then
+      cursor.action = mid(1, cursor.action - 1, #actions_key)
+    end
+    if btnp(1) and not cursor.lock then
+      cursor.action = mid(1, cursor.action + 1, #actions_key)
+    end
     if btnp(2) then
       cursor.line = mid(1, cursor.line - 1, #code)
     end
@@ -42,21 +53,24 @@ function _update()
       cursor.line = mid(1, cursor.line + 1, #code)
     end
     if btnp(4) then
-      actions[cursor.action]()
+      actions[actions_key[cursor.action]]()
     end
   end
 end
 
 function _draw()
   if editor then
+    local tab = ''
+    if enable_move then tab = ' ' end
+
     cls()
     color(1)
-    print('action: \f2⬅️ \f8'..cursor.action..' \f2➡️')
+    print('action: \f2⬅️ \f8'..actions_key[cursor.action]..' \f2➡️')
     print('\f2…………………………………………')
     for i = 1, 16 do
       if code[i] then
         if cursor.line == i then
-          print('\f1>\f9'..code[i].op..' \fa'..code[i].arg)
+          print('\f1>'..tab..'\f9'..code[i].op..' \fa'..code[i].arg)
         else
           print(' \fe'..code[i].op..' \ff'..code[i].arg)
         end
@@ -71,6 +85,11 @@ end
 
 function editor_delete()
   deli(code, cursor.line)
+end
+
+function editor_move()
+  enable_move = not enable_move
+  cursor.lock = not cursor.lock
 end
 
 function reset()
