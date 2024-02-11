@@ -40,6 +40,7 @@ function _update()
   end
 
   if editor then
+    local prev_line = cursor.line
     if btnp(0) and not cursor.lock then
       cursor.action = mid(1, cursor.action - 1, #actions_key)
     end
@@ -48,9 +49,15 @@ function _update()
     end
     if btnp(2) then
       cursor.line = mid(1, cursor.line - 1, #code)
+      if enable_move then
+        code[cursor.line], code[prev_line] = code[prev_line], code[cursor.line]
+      end
     end
     if btnp(3) then
       cursor.line = mid(1, cursor.line + 1, #code)
+      if enable_move then
+        code[cursor.line], code[prev_line] = code[prev_line], code[cursor.line]
+      end
     end
     if btnp(4) then
       actions[actions_key[cursor.action]]()
