@@ -1,9 +1,45 @@
 pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
+function _init()
+  p = {
+    x = 0,
+    y = 6*8,
+    dir = 1, -- left:0 right:1 up:2 down:3
+    v = 0.2,
+  }
+  t = 0
+end
+
+function _update()
+  if btnp(0) then p.dir = 0 end
+  if btnp(1) then p.dir = 1 end
+  if btnp(2) then p.dir = 2 end
+  if btnp(3) then p.dir = 3 end
+
+  if p.dir == 0 then p.x -= p.v end
+  if p.dir == 1 then p.x += p.v end
+  if p.dir == 2 then p.y -= p.v end
+  if p.dir == 3 then p.y += p.v end
+
+  t += 1
+end
+
 function _draw()
   cls()
   map()
+  draw_player()
+end
+
+function draw_player()
+  local sprite = 16
+  if p.dir == 2 or p.dir == 3 then
+    sprite = 18
+  end
+  local flip_x = p.dir == 0
+  local flip_y = p.dir == 3
+
+  spr(sprite + (t/8%2), p.x, p.y, 1, 1, flip_x, flip_y)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
