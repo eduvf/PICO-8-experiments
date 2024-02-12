@@ -4,23 +4,23 @@ __lua__
 function _init()
   p = {
     x = 0,
-    y = 6*8,
+    y = 6,
+    dx = 0,
+    dy = 0,
     dir = 1, -- left:0 right:1 up:2 down:3
-    v = 0.2,
+    next_dir = 1,
+    v = 0.25,
   }
   t = 0
 end
 
 function _update()
-  if btnp(0) then p.dir = 0 end
-  if btnp(1) then p.dir = 1 end
-  if btnp(2) then p.dir = 2 end
-  if btnp(3) then p.dir = 3 end
+  if btnp(0) then p.next_dir = 0 end
+  if btnp(1) then p.next_dir = 1 end
+  if btnp(2) then p.next_dir = 2 end
+  if btnp(3) then p.next_dir = 3 end
 
-  if p.dir == 0 then p.x -= p.v end
-  if p.dir == 1 then p.x += p.v end
-  if p.dir == 2 then p.y -= p.v end
-  if p.dir == 3 then p.y += p.v end
+  player_movement()
 
   t += 1
 end
@@ -31,15 +31,56 @@ function _draw()
   draw_player()
 end
 
+function player_movement()
+  if p.dir == 0 then p.dx -= p.v end
+  if p.dir == 1 then p.dx += p.v end
+  if p.dir == 2 then p.dy -= p.v end
+  if p.dir == 3 then p.dy += p.v end
+
+  if p.dx > 8 then
+    p.x = (p.x+1)%16
+    p.dx = 0
+  end
+  if p.dx < -8 then
+    p.x = (p.x-1)%16
+    p.dx = 0
+  end
+  if p.dy > 8 then
+    p.y = (p.y+1)%16
+    p.dy = 0
+  end
+  if p.dy < -8 then
+    p.y = (p.y-1)%16
+    p.dy = 0
+  end
+
+  if p.next_dir ~= p.dir and p.dx == 0 and p.dy == 0 then
+    local next_cell_x = p.x
+    local next_cell_y = p.y
+
+    if p.next_dir == 0 then next_cell_x -= 1 end
+    if p.next_dir == 1 then next_cell_x += 1 end
+    if p.next_dir == 2 then next_cell_y -= 1 end
+    if p.next_dir == 3 then next_cell_y += 1 end
+
+    if mget(next_cell_x, next_cell_y) ~= 1 then
+      p.dir = p.next_dir
+    end
+  end
+end
+
 function draw_player()
   local sprite = 16
   if p.dir == 2 or p.dir == 3 then
     sprite = 18
   end
+  local x = p.x * 8 + p.dx
+  local y = p.y * 8 + p.dy
   local flip_x = p.dir == 0
   local flip_y = p.dir == 3
 
-  spr(sprite + (t/8%2), p.x, p.y, 1, 1, flip_x, flip_y)
+  print(p.x..' '..p.y)
+  spr(sprite + (t/8%2), x, y, 1, 1, flip_x, flip_y)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
