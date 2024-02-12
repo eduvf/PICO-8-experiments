@@ -32,10 +32,20 @@ function _draw()
 end
 
 function player_movement()
-  if p.dir == 0 then p.dx -= p.v end
-  if p.dir == 1 then p.dx += p.v end
-  if p.dir == 2 then p.dy -= p.v end
-  if p.dir == 3 then p.dy += p.v end
+  local next_cell_x = p.x
+  local next_cell_y = p.y
+
+  if p.dir == 0 then next_cell_x -= 1 end
+  if p.dir == 1 then next_cell_x += 1 end
+  if p.dir == 2 then next_cell_y -= 1 end
+  if p.dir == 3 then next_cell_y += 1 end
+
+  if mget(next_cell_x, next_cell_y) ~= 1 then
+    if p.dir == 0 then p.dx -= p.v end
+    if p.dir == 1 then p.dx += p.v end
+    if p.dir == 2 then p.dy -= p.v end
+    if p.dir == 3 then p.dy += p.v end
+  end
 
   if p.dx > 8 then
     p.x = (p.x+1)%16
