@@ -10,6 +10,7 @@ function _init()
     dir = 1, -- left:0 right:1 up:2 down:3
     next_dir = 1,
     v = 0.25,
+    points = 0,
   }
   t = 0
 end
@@ -21,6 +22,7 @@ function _update()
   if btnp(3) then p.next_dir = 3 end
 
   player_movement()
+  check_points()
 
   t += 1
 end
@@ -79,6 +81,17 @@ function player_movement()
   end
 end
 
+function check_points()
+  local cell = mget(p.x, p.y)
+  if cell == 2 then
+    p.points += 1
+    mset(p.x, p.y, 0)
+  elseif cell == 3 then
+    p.points += 10
+    mset(p.x, p.y, 0)
+  end
+end
+
 function draw_player()
   local sprite = 16
   if p.dir == 2 or p.dir == 3 then
@@ -89,7 +102,7 @@ function draw_player()
   local flip_x = p.dir == 0
   local flip_y = p.dir == 3
 
-  print(p.x..' '..p.y)
+  print(p.x..' '..p.y..' points: '..p.points)
   spr(sprite + (t/8%2), x, y, 1, 1, flip_x, flip_y)
 end
 __gfx__
