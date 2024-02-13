@@ -14,36 +14,43 @@ function _init()
   p = {
     x = 2,
     y = 2,
-    dx = 0,
-    dy = 0,
+    off_x = 0,
+    off_y = 0,
+    next_x = 0,
+    next_y = 0,
     flip = false
   }
   msg = nil
 end
 
 function _update()
-  if btnp(0) then p.dx = -1 end
-  if btnp(1) then p.dx =  1 end
-  if btnp(2) then p.dy = -1 end
-  if btnp(3) then p.dy =  1 end
+  if btnp(0) then p.next_x = -1 end
+  if btnp(1) then p.next_x =  1 end
+  if btnp(2) then p.next_y = -1 end
+  if btnp(3) then p.next_y =  1 end
 
-  if p.dx < 0 then
+  if p.next_x < 0 then
     p.flip = true
-  elseif p.dx > 0 then
+  elseif p.next_x > 0 then
     p.flip = false
   end
 
-  local next_tile = mget(p.x+p.dx, p.y+p.dy)
+  local next_tile = mget(p.x+p.next_x, p.y+p.next_y)
   if fget(next_tile, 0) then
-    p.dx, p.dy = 0, 0
+    p.next_x, p.next_y = 0, 0
   end
   if fget(next_tile, 1) then
     msg = "oH, HI! hOW ARE YOU?"
   end
 
-  p.x += p.dx
-  p.y += p.dy
-  p.dx, p.dy = 0, 0
+  p.off_x += p.next_x * -8
+  p.off_y += p.next_y * -8
+  p.off_x *= 0.8
+  p.off_y *= 0.8
+
+  p.x += p.next_x
+  p.y += p.next_y
+  p.next_x, p.next_y = 0, 0
 
   t += 1
 end
@@ -51,7 +58,10 @@ end
 function _draw()
   cls()
   map(0, 0, 0, 0, 32, 32)
-  spr(1 + flr(t/12)%2, p.x * 8, p.y * 8, 1, 1, p.flip)
+  local s = 1 + flr(t / 12) % 2
+  local x = p.x * 8 + p.off_x
+  local y = p.y * 8 + p.off_y
+  spr(s, x, y, 1, 1, p.flip)
 
   if msg != nil then
     print(msg)
