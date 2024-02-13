@@ -37,6 +37,8 @@ function _update()
 
   local next_tile = mget(p.x+p.next_x, p.y+p.next_y)
   if fget(next_tile, 0) then
+    p.off_x += p.next_x * 4
+    p.off_y += p.next_y * 4
     p.next_x, p.next_y = 0, 0
   end
   if fget(next_tile, 1) then
