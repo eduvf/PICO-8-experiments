@@ -13,7 +13,12 @@ function _update()
 end
 
 function generate_wall()
-  cls(rnd(colors))
+  -- cls(rnd(colors))
+  for y = 0, 16 do
+    for x = 0, 16 do
+      rectfill(x*8, y*8, x*8+8, y*8+8, rnd(colors))
+    end
+  end
 end
 __gfx__
 000000000000000f000000ff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
