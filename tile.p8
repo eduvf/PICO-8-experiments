@@ -17,6 +17,10 @@ function generate_wall()
   for y = 0, 16 do
     for x = 0, 16 do
       rectfill(x*8, y*8, x*8+8, y*8+8, rnd(colors))
+      if rnd{true, false} then
+        pal(15, rnd(colors))
+        spr(rnd{1, 2}, x*8, y*8, 1, 1, rnd{true, false}, rnd{true, false})
+      end
     end
   end
 end
