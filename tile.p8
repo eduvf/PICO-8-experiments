@@ -16,12 +16,26 @@ function generate_wall()
   -- cls(rnd(colors))
   for y = 0, 16 do
     for x = 0, 16 do
-      rectfill(x*8, y*8, x*8+8, y*8+8, rnd(colors))
+      rectfill(x*8, y*8, x*8+7, y*8+7, rnd(colors))
       if rnd{true, false} then
         pal(15, rnd(colors))
         spr(rnd{1, 2}, x*8, y*8, 1, 1, rnd{true, false}, rnd{true, false})
       end
     end
+  end
+
+  for i = 1, flr(rnd(16)) do
+    local x = flr(rnd(16))
+    local y = flr(rnd(16))
+    local fg = rnd(colors)
+    local bg = rnd(colors)
+
+    rectfill(x*8, y*8, x*8+15, y*8+15, bg)
+    pal(15, fg)
+    spr(2, x*8,   y*8,   1, 1, false, false)
+    spr(2, x*8+8, y*8,   1, 1, true,  false)
+    spr(2, x*8,   y*8+8, 1, 1, false, true)
+    spr(2, x*8+8, y*8+8, 1, 1, true,  true)
   end
 end
 __gfx__
