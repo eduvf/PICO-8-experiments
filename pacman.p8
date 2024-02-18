@@ -9,7 +9,7 @@ function _init()
     dy = 0,
     dir = 1, -- left:0 right:1 up:2 down:3
     next_dir = 1,
-    v = 0.25,
+    v = 0.30,
     points = 0,
   }
   t = 0
@@ -83,11 +83,17 @@ end
 
 function check_points()
   local cell = mget(p.x, p.y)
+  local point = 0
+
   if cell == 2 then
-    p.points += 1
-    mset(p.x, p.y, 0)
+    point = 1
   elseif cell == 3 then
-    p.points += 10
+    point = 10
+  end
+
+  if point > 0 then
+    p.points += point
+    p.v += 0.01
     mset(p.x, p.y, 0)
   end
 end
