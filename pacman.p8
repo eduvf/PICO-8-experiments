@@ -16,10 +16,10 @@ function _init()
 end
 
 function _update()
-  if btnp(0) then p.next_dir = 0 end
-  if btnp(1) then p.next_dir = 1 end
-  if btnp(2) then p.next_dir = 2 end
-  if btnp(3) then p.next_dir = 3 end
+  if btnp(0) and p.dir ~= 1 then p.next_dir = 0 end
+  if btnp(1) and p.dir ~= 0 then p.next_dir = 1 end
+  if btnp(2) and p.dir ~= 3 then p.next_dir = 2 end
+  if btnp(3) and p.dir ~= 2 then p.next_dir = 3 end
 
   player_movement()
   check_points()
