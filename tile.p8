@@ -13,26 +13,30 @@ function _update()
 end
 
 function generate_wall()
-  -- cls(rnd(colors))
-  for y = 0, 16 do
-    for x = 0, 16 do
-      rectfill(x*8, y*8, x*8+7, y*8+7, rnd(colors))
-      if rnd{true, false} then
-        pal(15, rnd(colors))
-        spr(rnd{1, 2}, x*8, y*8, 1, 1, rnd{true, false}, rnd{true, false})
+  cls(2)
+  rectfill(8, 8, 8*15-1, 8*15-1, rnd(colors))
+
+  for y = 1, 14 do
+    for x = 1, 14 do
+      if rnd() < 0.7 then
+        rectfill(x*8, y*8, x*8+7, y*8+7, rnd(colors))
+        if rnd() < 0.8 then
+          pal(15, rnd(colors))
+          spr(rnd{1, 2}, x*8, y*8, 1, 1, rnd{true, false}, rnd{true, false})
+        end
       end
     end
   end
 
   for i = 1, flr(rnd(32)) do
-    local x = flr(rnd(16))
-    local y = flr(rnd(16))
+    local x = flr(rnd(13)) + 1
+    local y = flr(rnd(13)) + 1
     local fg = rnd(colors)
     local bg = rnd(colors)
 
     rectfill(x*8, y*8, x*8+15, y*8+15, bg)
     pal(15, fg)
-    if rnd() > 0.5 then
+    if rnd() < 0.5 then
       spr(1, x*8,   y*8,   1, 1, false, false)
       spr(1, x*8+8, y*8,   1, 1, true,  false)
       spr(1, x*8,   y*8+8, 1, 1, false, true)
