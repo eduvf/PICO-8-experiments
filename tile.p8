@@ -24,7 +24,7 @@ function generate_wall()
     end
   end
 
-  for i = 1, flr(rnd(16)) do
+  for i = 1, flr(rnd(32)) do
     local x = flr(rnd(16))
     local y = flr(rnd(16))
     local fg = rnd(colors)
@@ -32,10 +32,17 @@ function generate_wall()
 
     rectfill(x*8, y*8, x*8+15, y*8+15, bg)
     pal(15, fg)
-    spr(2, x*8,   y*8,   1, 1, false, false)
-    spr(2, x*8+8, y*8,   1, 1, true,  false)
-    spr(2, x*8,   y*8+8, 1, 1, false, true)
-    spr(2, x*8+8, y*8+8, 1, 1, true,  true)
+    if rnd() > 0.5 then
+      spr(1, x*8,   y*8,   1, 1, false, false)
+      spr(1, x*8+8, y*8,   1, 1, true,  false)
+      spr(1, x*8,   y*8+8, 1, 1, false, true)
+      spr(1, x*8+8, y*8+8, 1, 1, true,  true)
+    else
+      spr(2, x*8,   y*8,   1, 1, false, false)
+      spr(2, x*8+8, y*8,   1, 1, true,  false)
+      spr(2, x*8,   y*8+8, 1, 1, false, true)
+      spr(2, x*8+8, y*8+8, 1, 1, true,  true)
+    end
   end
 end
 __gfx__
