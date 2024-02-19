@@ -17,7 +17,7 @@ function _init()
     {op = 'end',      arg = ''}
   }
   editor = true
-  cursor = {
+  pointer = {
     line = 1,
     action = 1,
     lock = false
@@ -40,27 +40,27 @@ function _update()
   end
 
   if editor then
-    local prev_line = cursor.line
-    if btnp(0) and not cursor.lock then
-      cursor.action = mid(1, cursor.action - 1, #actions_key)
+    local prev_line = pointer.line
+    if btnp(0) and not pointer.lock then
+      pointer.action = mid(1, pointer.action - 1, #actions_key)
     end
-    if btnp(1) and not cursor.lock then
-      cursor.action = mid(1, cursor.action + 1, #actions_key)
+    if btnp(1) and not pointer.lock then
+      pointer.action = mid(1, pointer.action + 1, #actions_key)
     end
     if btnp(2) then
-      cursor.line = mid(1, cursor.line - 1, #code)
+      pointer.line = mid(1, pointer.line - 1, #code)
       if enable_move then
-        code[cursor.line], code[prev_line] = code[prev_line], code[cursor.line]
+        code[pointer.line], code[prev_line] = code[prev_line], code[pointer.line]
       end
     end
     if btnp(3) then
-      cursor.line = mid(1, cursor.line + 1, #code)
+      pointer.line = mid(1, pointer.line + 1, #code)
       if enable_move then
-        code[cursor.line], code[prev_line] = code[prev_line], code[cursor.line]
+        code[pointer.line], code[prev_line] = code[prev_line], code[pointer.line]
       end
     end
     if btnp(4) then
-      actions[actions_key[cursor.action]]()
+      actions[actions_key[pointer.action]]()
     end
   end
 end
@@ -72,11 +72,16 @@ function _draw()
 
     cls()
     color(1)
-    print('action: \f2⬅️ \f8'..actions_key[cursor.action]..' \f2➡️')
+    local text = '\f2⬅️ \f8'..actions_key[pointer.action]..' \f2➡️'
+    local lpad = 64 - (#text * 3 / 2)
+    cursor(lpad)
+    print(text)
+    cursor()
+    print('🅾️ do                     run ❎')
     print('\f2…………………………………………')
     for i = 1, 16 do
       if code[i] then
-        if cursor.line == i then
+        if pointer.line == i then
           print('\f1>'..tab..'\f9'..code[i].op..' \fa'..code[i].arg)
         else
           print(' \fe'..code[i].op..' \ff'..code[i].arg)
@@ -86,17 +91,17 @@ function _draw()
       end
     end
     print('\f2…………………………………………')
-    print('\f1line: '..cursor.line)
+    print('\f1line: '..pointer.line)
   end
 end
 
 function editor_delete()
-  deli(code, cursor.line)
+  deli(code, pointer.line)
 end
 
 function editor_move()
   enable_move = not enable_move
-  cursor.lock = not cursor.lock
+  pointer.lock = not pointer.lock
 end
 
 function reset()
