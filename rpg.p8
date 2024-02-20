@@ -12,6 +12,12 @@ function _init()
     next_y = 0,
     flip = false
   }
+  cam = {
+    x = 0,
+    y = 0,
+    off_x = 0,
+    off_y = 0,
+  }
   msg = nil
 end
 
@@ -37,6 +43,8 @@ function _update()
     msg = "oH, HI! hOW ARE YOU?"
   end
 
+  update_camera()
+
   p.off_x += p.next_x * -8
   p.off_y += p.next_y * -8
   p.off_x *= 0.8
@@ -51,7 +59,8 @@ end
 
 function _draw()
   cls()
-  map(0, 0, 0, 0, 32, 32)
+  camera(cam.x * 8 + cam.off_x, cam.y * 8 + cam.off_y)
+  map(0, 0, 0, 0, 64, 64)
   local s = 1 + flr(t / 12) % 2
   local x = p.x * 8 + p.off_x
   local y = p.y * 8 + p.off_y
@@ -60,6 +69,16 @@ function _draw()
   if msg != nil then
     print(msg)
   end
+end
+
+function update_camera()
+  cam.off_x += p.next_x * -8
+  cam.off_y += p.next_y * -8
+  cam.off_x *= 0.9
+  cam.off_y *= 0.9
+
+  cam.x += p.next_x
+  cam.y += p.next_y
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
