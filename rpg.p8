@@ -13,8 +13,8 @@ function _init()
     flip = false
   }
   cam = {
-    x = 0,
-    y = 0,
+    x = p.x - 7,
+    y = p.y - 7,
     off_x = 0,
     off_y = 0,
   }
