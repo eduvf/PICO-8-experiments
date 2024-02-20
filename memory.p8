@@ -19,6 +19,7 @@ function _init()
     first = 0,
     second = 0
   }
+  show_error_timer = 0
   match = false
 
   generate_board()
@@ -93,12 +94,22 @@ function main_game_update()
       match = check_match()
       if match then
         match = false
+        seen.first, seen.second = 0, 0
       else
-        hide[seen.first] = true
-        hide[seen.second] = true
+        show_error_timer = 20
+        update = show_error_update
       end
-      seen.first, seen.second = 0, 0
     end
+  end
+end
+
+function show_error_update()
+  show_error_timer -= 1
+  if show_error_timer <= 0 then
+    hide[seen.first] = true
+    hide[seen.second] = true
+    seen.first, seen.second = 0, 0
+    update = main_game_update
   end
 end
 
